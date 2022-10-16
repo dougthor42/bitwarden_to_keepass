@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bitwarden_to_keepass"
+version = "0.0.0"
+description = "A simple little script that backs up a Bitwarden vault to a local KeePass file."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Douglas Thor"},  # so that package core metadata "Author" field gets populated.
+    {name = "Douglas Thor", email = "doug.thor@gmail.com"},
+]
+maintainers = []
+keywords = []
+classifiers = []
+dependencies = []
+
+[project.optional-dependencies]
+
+[project.scripts]
+"bitwarden_to_keepass" = "bitwarden_to_keepass.cli:main"
+
+[project.urls]
+"Source Code" = "https://github.com/dougthor42/bitwarden_to_keepass"
+"Changelog" = "https://github.com/dougthor42/bitwarden_to_keepass/blob/master/CHANGELOG.md"
+"Bug Tracker" = "https://github.com/dougthor42/bitwarden_to_keepass/issues"
