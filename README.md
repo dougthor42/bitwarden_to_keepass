@@ -53,8 +53,7 @@ Install the Bitwarden CLI and the KeePass CLI as mentioned above.
 4.  Activate it: `. .venv/bin/activate`
 5.  Install python packages:
     1.  `pip install -U pip setuptools wheel`
-    2.  `pip install -r requirements.txt -r requirements-dev.txt`
-    3.  `pip install -e .`
+    2.  `pip install -e .[dev]`
 6.  Run tests to verify: `pytest`
 7.  Install pre-commit hooks: `pre-commit install`
 8.  Ready to develop
