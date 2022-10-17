@@ -2,5 +2,5 @@
 """
 
 
-def main():
+def run():
     print("CLI entry point")

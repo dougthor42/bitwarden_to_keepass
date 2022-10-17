@@ -51,7 +51,7 @@ dev = [
 ]
 
 [project.scripts]
-"bitwarden_to_keepass" = "bitwarden_to_keepass.cli:main"
+"bitwarden_to_keepass" = "bitwarden_to_keepass.cli:run"
 
 [project.urls]
 "Source Code" = "https://github.com/dougthor42/bitwarden_to_keepass"
