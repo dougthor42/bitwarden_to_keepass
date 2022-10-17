@@ -1,6 +1,57 @@
 """
+Command line interface definition.
+
+Run `bitwarden_to_keepass --help` for details.
 """
+import pathlib
+
+import click
+
+# Names of environment variables.
+BW_CLIENTID_ENV = "BW_CLIENTID"
+BW_CLIENTSECRET_ENV = "BW_CLIENTSECRET"
+KEEPASS_PASSWORD_ENV = "KEEPASS_PASSWORD"
 
 
-def run():
+@click.command
+@click.option(
+    "--keepass-password",
+    envvar="KEEPASS_PASSWORD",
+    prompt="KeePass Password",  # so that capitalization is correct.
+    hide_input=True,
+    help=(
+        "The password to the KeePass database. Will prompt if not given."
+        f" Can also be provided as the env var '{KEEPASS_PASSWORD_ENV}'."
+    ),
+)
+# env vars from https://bitwarden.com/help/cli/#using-an-api-key
+@click.option(
+    "--client-id",
+    envvar=BW_CLIENTID_ENV,
+    help=(
+        "The Bitwarden API client ID."
+        f" Can also be provided as the env var '{BW_CLIENTID_ENV}'."
+    ),
+)
+@click.option(
+    "--client-secret",
+    envvar=BW_CLIENTSECRET_ENV,
+    help=(
+        "The Bitwarden API client secret."
+        f" Can also be provided as the env var '{BW_CLIENTSECRET_ENV}'."
+    ),
+)
+@click.option(
+    "--keepass-file",
+    type=click.Path(exists=True, dir_okay=False, writable=True, path_type=pathlib.Path),
+    help="Path to the KeePass file to add to.",
+)
+@click.option("--group", help="The KeePass group to add the Bitwarden backup to.")
+def run(
+    keepass_password: str,
+    client_id: str,
+    client_secret: str,
+    keepass_file: pathlib.Path,
+    group: str,
+) -> None:
     print("CLI entry point")
