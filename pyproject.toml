@@ -17,6 +17,7 @@ maintainers = []
 keywords = []
 classifiers = []
 dependencies = [
+    "click>=8.1,<9.0",
     "pykeepass>=4.0,<5.0",
 ]
 
