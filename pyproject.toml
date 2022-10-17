@@ -16,7 +16,9 @@ authors = [
 maintainers = []
 keywords = []
 classifiers = []
-dependencies = []
+dependencies = [
+    "pykeepass>=4.0,<5.0",
+]
 
 [project.optional-dependencies]
 dev = [
