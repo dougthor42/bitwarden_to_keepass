@@ -4,7 +4,7 @@ from bitwarden_to_keepass import main
 
 
 # A copy-paste from the `bw unlock` command with fake session key.
-STDOUT = """
+STDOUT = b"""
 ? Master password: [hidden]
 Your vault is now unlocked!
 
@@ -25,4 +25,4 @@ def test_grab_session_key():
 
 def test_grab_session_key_raises():
     with pytest.raises(ValueError):
-        main.grab_session_key("foobar")
+        main.grab_session_key(b"foobar")
