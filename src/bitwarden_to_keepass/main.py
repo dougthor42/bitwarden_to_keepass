@@ -8,6 +8,13 @@ from typing import Iterator
 
 from bitwarden_to_keepass import logger
 
+# Names of environment variables.
+BW_MASTER_PASSWORD_ENV = "BW_MASTER_PW"
+BW_CLIENTID_ENV = "BW_CLIENTID"  # From BW docs
+BW_CLIENTSECRET_ENV = "BW_CLIENTSECRET"  # From BW docs
+BW_SESSION_ENV = "BW_SESSION"
+KEEPASS_PASSWORD_ENV = "KEEPASS_PASSWORD"
+
 
 @contextmanager
 def temp_env(new_vars: Dict[str, str]) -> Iterator[None]:

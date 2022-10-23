@@ -7,38 +7,35 @@ import pathlib
 
 import click
 
-# Names of environment variables.
-BW_CLIENTID_ENV = "BW_CLIENTID"
-BW_CLIENTSECRET_ENV = "BW_CLIENTSECRET"
-KEEPASS_PASSWORD_ENV = "KEEPASS_PASSWORD"
+from bitwarden_to_keepass import main
 
 
 @click.command
 @click.option(
     "--keepass-password",
-    envvar="KEEPASS_PASSWORD",
+    envvar=main.KEEPASS_PASSWORD_ENV,
     prompt="KeePass Password",  # so that capitalization is correct.
     hide_input=True,
     help=(
         "The password to the KeePass database. Will prompt if not given."
-        f" Can also be provided as the env var '{KEEPASS_PASSWORD_ENV}'."
+        f" Can also be provided as the env var '{main.KEEPASS_PASSWORD_ENV}'."
     ),
 )
 # env vars from https://bitwarden.com/help/cli/#using-an-api-key
 @click.option(
     "--client-id",
-    envvar=BW_CLIENTID_ENV,
+    envvar=main.BW_CLIENTID_ENV,
     help=(
         "The Bitwarden API client ID."
-        f" Can also be provided as the env var '{BW_CLIENTID_ENV}'."
+        f" Can also be provided as the env var '{main.BW_CLIENTID_ENV}'."
     ),
 )
 @click.option(
     "--client-secret",
-    envvar=BW_CLIENTSECRET_ENV,
+    envvar=main.BW_CLIENTSECRET_ENV,
     help=(
         "The Bitwarden API client secret."
-        f" Can also be provided as the env var '{BW_CLIENTSECRET_ENV}'."
+        f" Can also be provided as the env var '{main.BW_CLIENTSECRET_ENV}'."
     ),
 )
 @click.option(
