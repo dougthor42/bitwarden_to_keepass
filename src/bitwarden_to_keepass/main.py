@@ -109,6 +109,31 @@ def grab_session_key(text: bytes) -> str:
         raise ValueError(f"Did not find BW_SESSION key in '{text_str}'")
 
 
+def bw_export(file: pathlib.Path):
+    """
+    Calls the bitwarden CLI `export` command.
+
+    Args:
+        + file: The file to save the export to.
+    """
+
+    args = ["bw", "export", "--output", str(file), "--format", "json"]
+
+    org = None
+    if org:
+        args.extend(["--organizationid", org])
+
+    with bw_login():
+        with bw_unlock() as session_key:
+            os.environ[BW_SESSION_ENV] = session_key
+            logger.info(args)
+            output = subprocess.run(args, capture_output=True)
+            if output.returncode == 0:
+                logger.info(output)
+            else:
+                logger.warning(output)
+
+
 def run_backup(
     master_password: str,
     keepass_password: str,
@@ -130,5 +155,5 @@ def run_backup(
     }
     with temp_env(new_env_vars):
         logger.warning("Debug - would export.")
-        #  bw_export()
+        bw_export(pathlib.Path("foo.json"))
         #  add_to_keepass()
