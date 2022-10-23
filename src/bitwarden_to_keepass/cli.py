@@ -63,3 +63,6 @@ def run(
     group: str,
 ) -> None:
     print("CLI entry point")
+    main.run_backup(
+        master_password, keepass_password, client_id, client_secret, keepass_file, group
+    )

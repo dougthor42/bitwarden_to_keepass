@@ -1,6 +1,7 @@
 """
 """
 import os
+import pathlib
 import subprocess
 from contextlib import contextmanager
 from typing import Dict
@@ -106,3 +107,28 @@ def grab_session_key(text: bytes) -> str:
             return session_key
     else:
         raise ValueError(f"Did not find BW_SESSION key in '{text_str}'")
+
+
+def run_backup(
+    master_password: str,
+    keepass_password: str,
+    client_id: str,
+    client_secret: str,
+    keepass_file: pathlib.Path,
+    group: str,
+):
+    """
+    Run the backup.
+    """
+    # Set a bunch of env vars
+    new_env_vars = {
+        BW_MASTER_PASSWORD_ENV: master_password,
+        BW_CLIENTID_ENV: client_id,
+        BW_CLIENTSECRET_ENV: client_secret,
+        BW_SESSION_ENV: "",
+        KEEPASS_PASSWORD_ENV: keepass_password,
+    }
+    with temp_env(new_env_vars):
+        logger.warning("Debug - would export.")
+        #  bw_export()
+        #  add_to_keepass()
