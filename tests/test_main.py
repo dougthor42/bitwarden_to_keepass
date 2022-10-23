@@ -1,3 +1,5 @@
+import os
+
 import pytest
 
 from bitwarden_to_keepass import main
@@ -26,3 +28,20 @@ def test_grab_session_key():
 def test_grab_session_key_raises():
     with pytest.raises(ValueError):
         main.grab_session_key(b"foobar")
+
+
+def test_temp_env():
+    user = os.environ["USER"]
+    home = os.environ["HOME"]
+    with main.temp_env({"USER": "xxx", "HOME": "42", "NONEXISTENT": "?"}):
+        os.environ["SHOULD_EXIST"] = "foobar"
+        assert os.environ["USER"] == "xxx"
+        os.environ["USER"] = "yyy"
+        assert os.environ["USER"] == "yyy"
+        assert os.environ["HOME"] == "42"
+        assert os.environ["NONEXISTENT"] == "?"
+    assert os.environ["USER"] == user
+    assert os.environ["HOME"] == home
+    assert "NONEXISTENT" not in os.environ
+    assert "SHOULD_EXIST" in os.environ
+    os.environ.pop("SHOULD_EXIST", None)
