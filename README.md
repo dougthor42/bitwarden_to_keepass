@@ -8,6 +8,7 @@ A simple little script that backs up a Bitwarden vault to a local KeePass file.
 1.  Install the Bitwarden CLI.
 2.  Install the KeePass CLI.
 3.  Install this code.
+4.  Run.
 
 
 ### Install the Bitwarden CLI
@@ -41,6 +42,40 @@ sudo apt install kpcli \
 and we need something more script-friendly.
 
 Maybe [pykeepass](https://github.com/libkeepass/pykeepass) instead.
+
+
+### Install this code
+
+See [Development](#development).
+
+
+### Run
+
+Run `bitwarden_to_keepass`.
+
+You'll be prompted for all the secrets and whatnot. Each secret arg has an
+associated env var (see `bitwarden_to_keepass --help` for env var names). If
+that env var is found, the value from the env var will be used and you will
+not be prompted.
+
+You can also send in your secrets via command line, though this is not
+recommended.
+
+Personally I like to create a `secrets.sh` file:
+
+```shell
+#!/bin/bash
+export BW_MASTER_PW=<Bitwarden master password>
+export BW_CLIENTID=<Bitwarden API Client ID>
+export BW_CLIENTSECRET=<Bitwarden API Client Secret>
+```
+
+and source it before running:
+
+```console
+$ source secrets.sh
+$ bitwarden_to_keepass --keepass-file /c/foo/bar.kdbx
+```
 
 
 ## Development
