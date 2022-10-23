@@ -12,6 +12,16 @@ from bitwarden_to_keepass import main
 
 @click.command
 @click.option(
+    "--master-password",
+    envvar=main.BW_MASTER_PASSWORD_ENV,
+    prompt="Bitwarden Master Password",
+    hide_input=True,
+    help=(
+        "Your Bitwarden master password. Will prompt if not given."
+        f" Can also be provided as the env var '{main.BW_MASTER_PASSWORD_ENV}'."
+    ),
+)
+@click.option(
     "--keepass-password",
     envvar=main.KEEPASS_PASSWORD_ENV,
     prompt="KeePass Password",  # so that capitalization is correct.
@@ -45,6 +55,7 @@ from bitwarden_to_keepass import main
 )
 @click.option("--group", help="The KeePass group to add the Bitwarden backup to.")
 def run(
+    master_password: str,
     keepass_password: str,
     client_id: str,
     client_secret: str,
