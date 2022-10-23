@@ -137,3 +137,6 @@ tags
 ### Custom Things ###
 # Virtual Environments
 .venv/
+
+# Keep it secret. Keep it safe.
+secrets.sh
