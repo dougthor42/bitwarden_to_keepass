@@ -204,5 +204,17 @@ def run_backup(
     }
     with temp_env(new_env_vars):
         logger.warning("Debug - would export.")
-        bw_export(pathlib.Path("foo.json"))
-        #  add_to_keepass()
+
+        now = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        personal_vault_file = pathlib.Path(f"bitwarden_export_{now}.json")
+        bw_export(personal_vault_file)
+
+        #  now = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        #  org_vault_file = pathlib.Path(f"bitwarden_org_export_{now}.json")
+        #  bw_export(org_vault_file, org="foo")
+
+        add_to_keepass(
+            keepass_file,
+            password=keepass_password,
+            attachments=[personal_vault_file],
+        )
