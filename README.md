@@ -2,13 +2,16 @@
 
 A simple little script that backs up a Bitwarden vault to a local KeePass file.
 
+```console
+$ bitwarden_to_keepass --keepass-file /path/to/file.kdbx
+```
+
 
 ## Installation and Usage
 
 1.  Install the Bitwarden CLI.
-2.  Install the KeePass CLI.
-3.  Install this code.
-4.  Run.
+2.  Install this code.
+3.  Run.
 
 
 ### Install the Bitwarden CLI
@@ -26,22 +29,6 @@ wget https://github.com/bitwarden/cli/releases/download/v1.22.1/bw-linux-1.22.1.
 && sudo unzip -d /usr/local/bin bw-linux-1.22.1.zip \
 && sudo chmod a+x /usr/local/bin/bw
 ```
-
-
-### Install the KeePass CLI
-
-We use [this CLI for KeePass][kp-cli].
-
-```console
-sudo apt install kpcli \
-  && wget https://cfhcable.dl.sourceforge.net/project/kpcli/kpcli-3.8.1-1.deb \
-  && sudo dpkg -i ./kpcli-3.8.1-1.deb
-```
-
-... Actually I don't know if that will work. That's an interactive CLI
-and we need something more script-friendly.
-
-Maybe [pykeepass](https://github.com/libkeepass/pykeepass) instead.
 
 
 ### Install this code
