@@ -1,9 +1,13 @@
 import os
 
 import pytest
+from pykeepass import PyKeePass
 
 from bitwarden_to_keepass import main
 
+
+# The fake keepass database file password
+KP_PASSWORD = "test"
 
 # A copy-paste from the `bw unlock` command with fake session key.
 STDOUT = b"""
@@ -45,3 +49,19 @@ def test_temp_env():
     assert "NONEXISTENT" not in os.environ
     assert "SHOULD_EXIST" in os.environ
     os.environ.pop("SHOULD_EXIST", None)
+
+
+def test_add_to_keepass(keepass_file, tmp_path):
+    # Create a dummy attachment file.
+    attachment = tmp_path / "foo.txt"
+    attachment.write_text("Hello world")
+    attachments = [attachment]
+
+    main.add_to_keepass(keepass_file, password=KP_PASSWORD, attachments=attachments)
+
+    kp = PyKeePass(str(keepass_file), password=KP_PASSWORD)
+    assert len(kp.groups) == 3
+    group = kp.find_groups(name=main.KEEPASS_GROUP, first=True)
+    assert group is not None
+    assert len(group.entries) == 1
+    assert len(kp.attachments) == len(attachments)

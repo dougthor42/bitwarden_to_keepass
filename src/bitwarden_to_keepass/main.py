@@ -1,11 +1,15 @@
 """
 """
+import datetime
 import os
 import pathlib
 import subprocess
 from contextlib import contextmanager
 from typing import Dict
+from typing import Iterable
 from typing import Iterator
+
+from pykeepass import PyKeePass
 
 from bitwarden_to_keepass import logger
 
@@ -15,6 +19,9 @@ BW_CLIENTID_ENV = "BW_CLIENTID"  # From BW docs
 BW_CLIENTSECRET_ENV = "BW_CLIENTSECRET"  # From BW docs
 BW_SESSION_ENV = "BW_SESSION"
 KEEPASS_PASSWORD_ENV = "KEEPASS_PASSWORD"
+
+# Name of the group ("folder") in KeePass to store backups to.
+KEEPASS_GROUP = "BitWarden Backups"
 
 
 @contextmanager
@@ -132,6 +139,43 @@ def bw_export(file: pathlib.Path):
                 logger.info(output)
             else:
                 logger.warning(output)
+
+
+def add_to_keepass(
+    keepass_file: pathlib.Path, password: str, attachments: Iterable[pathlib.Path] = ()
+):
+    """Add an entry to KeePass, including all attachments.
+
+    Args:
+        + keepass_file: The KeePass file to act on.
+        + password: The password that unlocks the KeePass file.
+        + attachments: An iterable of Paths that point to the attachments to add
+          to the entry.
+    """
+    logger.info(f"Opening {keepass_file}")
+    kp = PyKeePass(str(keepass_file), password=password)
+
+    group = kp.find_groups(name=KEEPASS_GROUP, first=True)
+    if group is None:
+        logger.info(f"Group {KEEPASS_GROUP} does not exist, creating.")
+        group = kp.add_group(kp.root_group, group_name=KEEPASS_GROUP)
+
+    today = datetime.date.today().isoformat()
+    entry_name = f"Bitwarden Backup {today}"
+    logger.info(f"Entry name: '{entry_name}'")
+    entry = kp.add_entry(group, entry_name, username="", password="")
+
+    # Add the attachment. KeePass stores the attachment as a binary in the
+    # database, and then stores a link to that binary in the entry.
+    for path in attachments:
+        logger.info(f"Adding attachment: {path}")
+        binary_data = path.read_bytes()
+        filename = path.name
+        binary_id = kp.add_binary(binary_data)
+        entry.add_attachment(binary_id, filename)
+
+    logger.info("Saving KP Database file")
+    kp.save()
 
 
 def run_backup(
