@@ -160,9 +160,14 @@ def add_to_keepass(
         logger.info(f"Group {KEEPASS_GROUP} does not exist, creating.")
         group = kp.add_group(kp.root_group, group_name=KEEPASS_GROUP)
 
-    today = datetime.date.today().isoformat()
-    entry_name = f"Bitwarden Backup {today}"
+    now = datetime.datetime.now(tz=datetime.timezone.utc).isoformat(sep=" ")
+    entry_name = f"Bitwarden Backup {now}"
     logger.info(f"Entry name: '{entry_name}'")
+
+    # They raise a base exception if the entry already exists... /facepalm
+    # https://github.com/libkeepass/pykeepass/issues/293
+    # So instead I changed to a full UTC timestamp (instead of just date) for
+    # the name.
     entry = kp.add_entry(group, entry_name, username="", password="")
 
     # Add the attachment. KeePass stores the attachment as a binary in the
