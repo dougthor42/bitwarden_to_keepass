@@ -21,7 +21,7 @@ BW_SESSION_ENV = "BW_SESSION"
 KEEPASS_PASSWORD_ENV = "KEEPASS_PASSWORD"
 
 # Name of the group ("folder") in KeePass to store backups to.
-KEEPASS_GROUP = "BitWarden Backups"
+KEEPASS_GROUP = "Bitwarden Backups"
 
 
 @contextmanager
