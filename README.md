@@ -55,6 +55,9 @@ Personally I like to create a `secrets.sh` file:
 export BW_MASTER_PW=<Bitwarden master password>
 export BW_CLIENTID=<Bitwarden API Client ID>
 export BW_CLIENTSECRET=<Bitwarden API Client Secret>
+
+# If you also want to backup your Organization data:
+export BW_ORG_ID=<Organization ID>
 ```
 
 and source it before running:

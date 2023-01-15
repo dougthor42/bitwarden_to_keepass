@@ -31,6 +31,16 @@ from bitwarden_to_keepass import main
         f" Can also be provided as the env var '{main.KEEPASS_PASSWORD_ENV}'."
     ),
 )
+@click.option(
+    "--org-id",
+    envvar=main.BW_ORG_ID_ENV,
+    default="",
+    help=(
+        "The Bitwarden Organization ID to export. If not given, only the user's"
+        " vault is exported."
+        f" Can also be provided as the env var '{main.BW_ORG_ID_ENV}'."
+    ),
+)
 # env vars from https://bitwarden.com/help/cli/#using-an-api-key
 @click.option(
     "--client-id",
@@ -57,6 +67,7 @@ from bitwarden_to_keepass import main
 def run(
     master_password: str,
     keepass_password: str,
+    org_id: str,
     client_id: str,
     client_secret: str,
     keepass_file: pathlib.Path,
@@ -64,5 +75,11 @@ def run(
 ) -> None:
     print("CLI entry point")
     main.run_backup(
-        master_password, keepass_password, client_id, client_secret, keepass_file, group
+        master_password=master_password,
+        keepass_password=keepass_password,
+        client_id=client_id,
+        client_secret=client_secret,
+        organization_id=org_id,
+        keepass_file=keepass_file,
+        group=group,
     )
