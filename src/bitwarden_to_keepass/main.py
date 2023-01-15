@@ -5,10 +5,10 @@ import os
 import subprocess
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Dict
 from typing import Iterable
 from typing import Iterator
 from typing import List
+from typing import Mapping
 
 from pykeepass import PyKeePass
 
@@ -27,7 +27,7 @@ KEEPASS_GROUP = "Bitwarden Backups"
 
 
 @contextmanager
-def temp_env(new_vars: Dict[str, str]) -> Iterator[None]:
+def temp_env(new_vars: Mapping[str, str]) -> Iterator[None]:
     """
     Context manager that restores env vars on exit.
 
@@ -118,7 +118,7 @@ def grab_session_key(text: bytes) -> str:
         raise ValueError(f"Did not find BW_SESSION key in '{text_str}'")
 
 
-def bw_export(file: Path, org: str = ""):
+def bw_export(file: Path, org: str = "") -> None:
     """
     Calls the bitwarden CLI `export` command.
 
@@ -144,14 +144,16 @@ def bw_export(file: Path, org: str = ""):
                 logger.warning(output)
 
 
-def local_now():
+def local_now() -> datetime.datetime:
     """
     Return the current datetime as an aware datetime object with the system timezone.
     """
     return datetime.datetime.now(tz=datetime.timezone.utc).astimezone()
 
 
-def add_to_keepass(keepass_file: Path, password: str, attachments: Iterable[Path] = ()):
+def add_to_keepass(
+    keepass_file: Path, password: str, attachments: Iterable[Path] = ()
+) -> None:
     """
     Add an entry to KeePass, including all attachments.
 
@@ -201,7 +203,7 @@ def run_backup(
     organization_id: str,
     keepass_file: Path,
     group: str,
-):
+) -> None:
     """
     Run the backup.
     """
