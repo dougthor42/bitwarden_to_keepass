@@ -160,7 +160,10 @@ def add_to_keepass(
         logger.info(f"Group {KEEPASS_GROUP} does not exist, creating.")
         group = kp.add_group(kp.root_group, group_name=KEEPASS_GROUP)
 
-    now = datetime.datetime.now(tz=datetime.timezone.utc).isoformat(sep=" ")
+    # Now as an aware, local TZ object.
+    now = (
+        datetime.datetime.now(tz=datetime.timezone.utc).astimezone().isoformat(sep=" ")
+    )
     entry_name = f"Bitwarden Backup {now}"
     logger.info(f"Entry name: '{entry_name}'")
 
