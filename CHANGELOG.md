@@ -7,6 +7,11 @@
   This should be usable now and ticks all of the original requirements.
 
 
+## v0.0.1 (2023-01-14)
+
++ A dummy tag to test the release workflow.
+
+
 ## v0.0.0 (2022-10-16):
 
 + Project created from template

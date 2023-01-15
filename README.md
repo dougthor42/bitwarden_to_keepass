@@ -84,6 +84,44 @@ Install the Bitwarden CLI and the KeePass CLI as mentioned above.
 8.  Ready to develop
 
 
+### Releasing
+
+1.  Update `CHANGELOG.md` by inserting a new heading:
+    ```diff
+    --- a/CHANGELOG.md
+    +++ b/CHANGELOG.md
+    @@ -3,6 +3,9 @@
+
+     ## Unreleased
+
+    +
+    +## v1.0.0 (2023-01-14)
+    +
+     + Finally decided to work on this again and got things to decent working state!
+       This should be usable now and ticks all of the original requirements.
+    ```
+
+2.  Update pyproject.toml with the new version:
+    ```diff
+    --- a/pyproject.toml
+    +++ b/pyproject.toml
+    @@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
+
+     [project]
+     name = "bitwarden_to_keepass"
+    -version = "0.0.1"
+    +version = "1.0.0"
+     description = "A simple little script that backs up a Bitwarden vault to a local KeePass file."
+     readme = "README.md"
+     requires-python = ">=3.8"
+    ```
+3.  Commit these changes.
+4.  Create a new git tag `git tag v1.0.0 -m "Release v1.0.0"`.
+
+Then push tags to github. CI will build the source distribution and wheel and
+upload them to PyPI.
+
+
 ## Changelog
 
 See [CHANGELOG.md](./CHANGELOG.md).
