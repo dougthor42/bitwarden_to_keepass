@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bitwarden_to_keepass"
-version = "0.0.1"
+version = "1.0.0"
 description = "A simple little script that backs up a Bitwarden vault to a local KeePass file."
 readme = "README.md"
 requires-python = ">=3.8"

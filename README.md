@@ -33,7 +33,11 @@ wget https://github.com/bitwarden/cli/releases/download/v1.22.1/bw-linux-1.22.1.
 
 ### Install this code
 
-See [Development](#development).
+```console
+pip install bitwarden-to-keepass
+```
+
+Or see [Development](#development).
 
 
 ### Run
