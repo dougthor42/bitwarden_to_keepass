@@ -90,4 +90,3 @@ See [CHANGELOG.md](./CHANGELOG.md).
 
 
 [bw-cli]: https://bitwarden.com/help/cli/
-[kp-cli]: https://kpcli.sourceforge.io/
