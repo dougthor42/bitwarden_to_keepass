@@ -2,9 +2,9 @@
 """
 import datetime
 import os
-import pathlib
 import subprocess
 from contextlib import contextmanager
+from pathlib import Path
 from typing import Dict
 from typing import Iterable
 from typing import Iterator
@@ -118,7 +118,7 @@ def grab_session_key(text: bytes) -> str:
         raise ValueError(f"Did not find BW_SESSION key in '{text_str}'")
 
 
-def bw_export(file: pathlib.Path, org: str = ""):
+def bw_export(file: Path, org: str = ""):
     """
     Calls the bitwarden CLI `export` command.
 
@@ -151,9 +151,7 @@ def local_now():
     return datetime.datetime.now(tz=datetime.timezone.utc).astimezone()
 
 
-def add_to_keepass(
-    keepass_file: pathlib.Path, password: str, attachments: Iterable[pathlib.Path] = ()
-):
+def add_to_keepass(keepass_file: Path, password: str, attachments: Iterable[Path] = ()):
     """
     Add an entry to KeePass, including all attachments.
 
@@ -201,7 +199,7 @@ def run_backup(
     client_id: str,
     client_secret: str,
     organization_id: str,
-    keepass_file: pathlib.Path,
+    keepass_file: Path,
     group: str,
 ):
     """
@@ -217,18 +215,18 @@ def run_backup(
         KEEPASS_PASSWORD_ENV: keepass_password,
     }
 
-    attachments: List[pathlib.Path] = []
+    attachments: List[Path] = []
 
     with temp_env(new_env_vars):
         now = local_now().strftime("%Y%m%d%H%M%S")
-        personal_vault_file = pathlib.Path(f"bitwarden_export_{now}.json")
+        personal_vault_file = Path(f"bitwarden_export_{now}.json")
         bw_export(personal_vault_file)
         attachments.append(personal_vault_file)
 
     if organization_id:
         with temp_env(new_env_vars):
             now = local_now().strftime("%Y%m%d%H%M%S")
-            org_vault_file = pathlib.Path(f"bitwarden_org_export_{now}.json")
+            org_vault_file = Path(f"bitwarden_org_export_{now}.json")
             bw_export(org_vault_file, org=organization_id)
             attachments.append(org_vault_file)
 
