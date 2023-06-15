@@ -71,6 +71,27 @@ $ source secrets.sh
 $ bitwarden_to_keepass --keepass-file /c/foo/bar.kdbx
 ```
 
+It might be useful to put everything into a script:
+
+```shell
+#!/bin/bash
+# run.sh
+echo "Activating venv"
+source .venv/bin/activate
+echo "Setting env vars"
+source secrets.sh
+echo "Running"
+bitwarden_to_keepass --keepass-file "/path/to/file.kdbx"
+echo "Removing files"
+rm bitwarden_*export_*.json
+echo "Deactivating venv"
+deactivate
+```
+
+```console
+$ ./run.sh
+```
+
 
 ## Development
 
