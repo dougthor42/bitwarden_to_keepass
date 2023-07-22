@@ -25,8 +25,8 @@ $ bitwarden_to_keepass --keepass-file /path/to/file.kdbx
 For convenience, you can use this command to do all of the above (on Linux)
 
 ```console
-wget https://github.com/bitwarden/cli/releases/download/v1.22.1/bw-linux-1.22.1.zip \
-&& sudo unzip -d /usr/local/bin bw-linux-1.22.1.zip \
+wget https://github.com/bitwarden/clients/releases/download/cli-v2023.7.0/bw-linux-2023.7.0.zip \
+&& sudo unzip -d /usr/local/bin bw-linux-2023.7.0.zip \
 && sudo chmod a+x /usr/local/bin/bw
 ```
 
