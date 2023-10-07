@@ -46,3 +46,18 @@ jobs:
         continue-on-error: ${{ matrix.allowed-to-fail }}
         run: |
           pytest
+
+  # A summary of all jobs and their result.
+  # This is the only job that's required to pass (as set by branch protection
+  # rules in repo settings) so that we don't have to update those rules when
+  # a new job is added.
+  check-all-jobs:
+    if: always()
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check status of all jobs.
+        uses: re-actors/alls-green@v1.2.2
+        with:
+          jobs: ${{ toJSON(needs) }}
