@@ -21,13 +21,9 @@ jobs:
     strategy:
       fail-fast: False
       matrix:
-        python-version: ["3.8", "3.9"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
         allowed-to-fail: [False]
         include:
-          - python-version: "3.10"
-            allowed-to-fail: True
-          - python-version: "3.11"
-            allowed-to-fail: True
           - python-version: "3.12"
             allowed-to-fail: True
     name: "Build and Test: Python ${{ matrix.python-version }}"
