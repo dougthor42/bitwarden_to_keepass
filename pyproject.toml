@@ -46,7 +46,6 @@ dev = [
     "platformdirs==2.5.2",
     "pluggy==0.13.1",
     "pre-commit==3.4.0",
-    "py==1.10.0",
     "pycparser==2.21",
     "pycryptodomex==3.19.0",
     "pykeepass==4.0.3",
