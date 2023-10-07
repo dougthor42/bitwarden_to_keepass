@@ -3,6 +3,8 @@
 
 ## Unreleased
 
++ CI now runs tests against multiple Python versions. (#2)
+
 
 ## v1.0.0 (2023-01-14)
 
