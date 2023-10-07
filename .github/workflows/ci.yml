@@ -41,12 +41,12 @@ jobs:
           python-version: "${{ matrix.python-version }}"
 
       - name: Install dependencies
-        continue-on-fail: ${{ matrix.allowed-to-fail }}
+        continue-on-error: ${{ matrix.allowed-to-fail }}
         run: |
           pip install --upgrade pip setuptools wheel
           pip install -e .[dev]
 
       - name: Run tests
-        continue-on-fail: ${{ matrix.allowed-to-fail }}
+        continue-on-error: ${{ matrix.allowed-to-fail }}
         run: |
           pytest
