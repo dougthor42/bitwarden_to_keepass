@@ -33,6 +33,17 @@ repos:
         args: ["--pytest-test-first"]
       - id: debug-statements
 
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.27.0
+    hooks:
+      - id: check-github-workflows
+        args: ["--verbose"]
+
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.6.26
+    hooks:
+      - id: actionlint
+
   - repo: https://github.com/psf/black
     rev: 22.6.0
     hooks:
