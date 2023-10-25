@@ -7,6 +7,7 @@
 + Updated dependencies to work with py3.10 and py3.11. (#3)
 + Switched to `ruff` for linting. (#5)
 + Updated CI to also run all pre-commit checks and use more recent actions. (#6)
++ Added Github action lints/checks to pre-commit. (#7)
 
 
 ## v1.0.0 (2023-01-14)
