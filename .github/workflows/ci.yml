@@ -1,13 +1,11 @@
-# A very basic Github Workflow.
-
-# This workflow will install Python dependencies, run tests and lint with a
-# single version of Python.
+# This workflow will install Python dependencies, run tests across multiple
+# Python versions and lints with a single version of Python.
 # For more information see:
 # https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+---
+name: CI
 
-name: Test
-
-on:
+on:  # yamllint disable-line rule:truthy
   push:
     branches:
       - "*"
@@ -19,33 +17,53 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     strategy:
-      fail-fast: False
+      fail-fast: false
       matrix:
         python-version: ["3.8", "3.9", "3.10", "3.11"]
-        allowed-to-fail: [False]
+        allowed-to-fail: [false]
         include:
           - python-version: "3.12"
-            allowed-to-fail: True
+            allowed-to-fail: true
     name: "Build and Test: Python ${{ matrix.python-version }}"
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: "Set up Python ${{ matrix.python-version }}"
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: "${{ matrix.python-version }}"
 
       - name: Install dependencies
         continue-on-error: ${{ matrix.allowed-to-fail }}
         run: |
-          pip install --upgrade pip setuptools wheel
           pip install -e .[dev]
 
       - name: Run tests
         continue-on-error: ${{ matrix.allowed-to-fail }}
         run: |
           pytest
+
+  lint:
+    # TODO: DRY this with tests job
+    name: "Lint"
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: "Set up Python 3.8"
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+
+      - name: Install dependencies
+        run: |
+          pip install -e .[dev]
+
+      - name: Run lint
+        run: |
+          pre-commit run --all-files
 
   # A summary of all jobs and their result.
   # This is the only job that's required to pass (as set by branch protection
@@ -54,7 +72,8 @@ jobs:
   check-all-jobs:
     if: always()
     needs:
-      - build
+      - tests
+      - lint
     runs-on: ubuntu-latest
     steps:
       - name: Check status of all jobs.
