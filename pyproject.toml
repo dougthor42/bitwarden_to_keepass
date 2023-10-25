@@ -73,3 +73,43 @@ build = [
 "Source Code" = "https://github.com/dougthor42/bitwarden_to_keepass"
 "Changelog" = "https://github.com/dougthor42/bitwarden_to_keepass/blob/master/CHANGELOG.md"
 "Bug Tracker" = "https://github.com/dougthor42/bitwarden_to_keepass/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.mypy]
+show_error_codes = true
+
+[tool.pytest.ini_options]
+# Note: We use the pytest-cov option "--cov-context test" here instead of the
+# coverage option "dynamic_context = test_function" in [tool.coverage.run] because
+# then the contexts will include the full pytest name and account for
+# parametrized fuctions.
+# Basically the difference between this (`pytest-cov`)
+#   tests/test_cli.py::TestCli::test_cli[test_args0]|run
+#   tests/test_cli.py::TestCli::test_cli[test_args1]|run
+#   tests/test_cli.py::TestCli::test_cli_invalid_args[invalid_args2]|run
+#   tests/test_cli.py::TestCli::test_cli_invalid_args[invalid_args3]|run
+# and this (just plain `coverage`)
+#   tests.test_cli.TestCli.test_cli_invalid_args
+#   tests.test_cli.TestCli.test_cli_prompts_for_days
+# The full pytest name shows us that the first two parametrized tests of
+# test_cli_invalid_args do NOT test the line.
+addopts = """\
+  -ra \
+  --cov bitwarden_to_keepass \
+  --cov-report html \
+  --cov-context test \
+  """
+
+[tool.coverage.html]
+show_contexts = true
+
+[tool.coverage.run]
+branch = true
+
+[tool.ruff]
+target-version = "py38"
