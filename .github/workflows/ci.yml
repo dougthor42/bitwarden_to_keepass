@@ -14,7 +14,7 @@ on:  # yamllint disable-line rule:truthy
       - "*"
 
 jobs:
-  build:
+  tests:
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
