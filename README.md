@@ -158,6 +158,12 @@ First, install `bazel`:
 $ source setup_bazel.sh
 ```
 
+Then activate your venv:
+
+```console
+$ . .venv/bin/activate
+```
+
 To run tests:
 
 ```console
