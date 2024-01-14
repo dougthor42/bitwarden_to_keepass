@@ -147,9 +147,60 @@ Then push tags to github. CI will build the source distribution and wheel and
 upload them to PyPI.
 
 
+### Bazel
+
+I'm experimenting with [`bazel`][bazel] for running tests (and perhaps also compiling
+a binary in the future).
+
+First, install `bazel`:
+
+```console
+$ source setup_bazel.sh
+```
+
+Then activate your venv:
+
+```console
+$ . .venv/bin/activate
+```
+
+To run tests:
+
+```console
+$ bazel test //tests:test_main
+```
+
+If a test fails, you'll see something like:
+
+```
+INFO: Build completed, 1 test FAILED, 2 total actions
+//tests:test_main                                                        FAILED in 1.7s
+  /home/dthor/.cache/bazel/_bazel_dthor/7076d176777da645a0c7cf0359126a31/execroot/_main/bazel-out/k8-fastbuild/testlogs/tests/test_main/test.log
+
+  Executed 1 out of 1 test: 1 fails locally.
+```
+
+To see the logs of that test, open that file in `less` or whatever you prefer:
+
+```console
+$ less bazel-out/k8-fastbuild/testlogs/tests/test_main/test.log
+```
+
+There are a couple other CLI args that might be useful:
+
++ `--test_output=streamed`: Run tests serially and show the output of pytest.
+
+To build (though note that this doesn't fully work yet):
+
+```console
+$ bazel build //src/bitwarden_to_keepass:cli
+```
+
+
 ## Changelog
 
 See [CHANGELOG.md](./CHANGELOG.md).
 
 
 [bw-cli]: https://bitwarden.com/help/cli/
+[bazel]: https://bazel.build/
