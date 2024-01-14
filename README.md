@@ -158,6 +158,22 @@ To run tests:
 $ bazel test //tests:test_main
 ```
 
+If a test fails, you'll see something like:
+
+```
+INFO: Build completed, 1 test FAILED, 2 total actions
+//tests:test_main                                                        FAILED in 1.7s
+  /home/dthor/.cache/bazel/_bazel_dthor/7076d176777da645a0c7cf0359126a31/execroot/_main/bazel-out/k8-fastbuild/testlogs/tests/test_main/test.log
+
+  Executed 1 out of 1 test: 1 fails locally.
+```
+
+To see the logs of that test, open that file in `less` or whatever you prefer:
+
+```console
+$ less bazel-out/k8-fastbuild/testlogs/tests/test_main/test.log
+```
+
 There are a couple other CLI args that might be useful:
 
 + `--test_output=streamed`: Run tests serially and show the output of pytest.
