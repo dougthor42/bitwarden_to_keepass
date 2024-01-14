@@ -147,9 +147,32 @@ Then push tags to github. CI will build the source distribution and wheel and
 upload them to PyPI.
 
 
+### Bazel
+
+I'm experimenting with [`bazel`][bazel] for running tests (and perhaps also compiling
+a binary in the future).
+
+To run tests:
+
+```console
+$ bazel test //tests:test_main
+```
+
+There are a couple other CLI args that might be useful:
+
++ `--test_output=streamed`: Run tests serially and show the output of pytest.
+
+To build (though note that this doesn't fully work yet):
+
+```console
+$ bazel build //src/bitwarden_to_keepass:cli
+```
+
+
 ## Changelog
 
 See [CHANGELOG.md](./CHANGELOG.md).
 
 
 [bw-cli]: https://bitwarden.com/help/cli/
+[bazel]: https://bazel.build/
