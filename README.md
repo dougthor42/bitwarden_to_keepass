@@ -152,6 +152,12 @@ upload them to PyPI.
 I'm experimenting with [`bazel`][bazel] for running tests (and perhaps also compiling
 a binary in the future).
 
+First, install `bazel`:
+
+```console
+$ source setup_bazel.sh
+```
+
 To run tests:
 
 ```console
