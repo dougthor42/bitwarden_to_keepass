@@ -37,11 +37,15 @@ def pytest_test(name, srcs, deps, **kwargs):
         main = shim,
         # TODO: What's this 'location'?
         args = ["$(location {})".format(src) for src in srcs],
-        # Within bazel, `$HOME` is typically set to $TEST_TMPDIR`, but it looks
-        # like there's a bug? https://github.com/bazelbuild/bazel/issues/10652
-        # So we inject it manually.
-        # TODO: Don't point to root, point to $TEST_TMPDIR instead.
-        env = {"HOME": "/"},
+        env = {
+            # Within bazel, `$HOME` is typically set to $TEST_TMPDIR`, but it looks
+            # like there's a bug? https://github.com/bazelbuild/bazel/issues/10652
+            # So we inject it manually.
+            # TODO: Don't point to root, point to $TEST_TMPDIR instead.
+            "HOME": "/",
+            # Force pytest to always color output.
+            "PYTEST_ADDOPTS": "--color=yes",
+        },
         deps = deps,
         **kwargs,
     )
