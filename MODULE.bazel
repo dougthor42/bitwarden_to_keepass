@@ -1,0 +1,38 @@
+# Name the workspace/module
+module(
+    name = "bitwarden-to-keepass",
+    version = "0.0.0",
+    compatibility_level = 1,
+)
+
+# Install rules_python, which allows us to define how bazel should work with python files.
+# See https://github.com/bazelbuild/rules_python/blob/c6941a8dad4c7a221125fbad7c8bfaac377e00ba/examples/bzlmod/MODULE.bazel
+bazel_dep(name = "rules_python", version = "0.31.0")
+
+# Init the python toolchain using the extension.
+# This is similar to the "python_register_toolchains" function in WORKSPACE.
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    configure_coverage_tool = True,
+    # Available versions are listed in @rules_python//python:versions.bzl.
+    python_version = "3.8"
+)
+
+# Enable pip
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
+
+
+# To fetch pip dependencies, use pip.parse. We can pass in various options,
+# but typically we pass requirements and the Python version. The Python
+# version must have been configured by a corresponding `python.toolchain()`
+# call.
+pip.parse(
+    # This name is what gets used in other BUILD files with `load()`.
+    hub_name = "pypi",
+    python_version = "3.8.18",
+    # python_interpreter_target = interpreter,
+    requirements_lock = "//:requirements_lock.txt",
+)
+
+# Same as WORKSPACE install_deps()
+use_repo(pip, "pypi")
