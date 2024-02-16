@@ -1,0 +1,5 @@
+# Don't use the MODULE.bazel stuff yet.
+common --noenable_bzlmod
+
+# Show output if tests fail.
+test --test_output=errors
