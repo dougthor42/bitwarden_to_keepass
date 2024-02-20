@@ -1,5 +1,5 @@
-# Don't use the MODULE.bazel stuff yet.
-common --noenable_bzlmod
+# Use the MODULE.bazel stuff instead of the old WORKSPACE.
+common --enable_bzlmod
 
 # Show output if tests fail.
 test --test_output=errors
