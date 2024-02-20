@@ -26,10 +26,9 @@ py_library(
 pytest_test(
     name = "test_main",
     srcs = ["test_main.py"],
-    # imports = ["src/bitwarden_to_keepass"],
     deps = [
         # To reference something defined in another BUILD file, prefex with
-        # "//"
+        # "//". Note that the path is relative to the top-level WORKSPACE.
         "//src/bitwarden_to_keepass:main",
         # Reference to current BUILD file
         ":__init__",
